@@ -1,0 +1,9 @@
+.venv/
+.env
+.env.*
+!.env.example
+__pycache__/
+.pytest_cache/
+*.py[cod]
+data/raw/**/election_change_log.csv
+*.crc

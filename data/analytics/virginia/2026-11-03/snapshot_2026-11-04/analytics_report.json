@@ -1,0 +1,48 @@
+{
+  "milestone": "M4: exploratory analytics",
+  "overall_status": "WARN",
+  "snapshot_id": "snapshot_2026-11-04",
+  "source_status": "UNOFFICIAL RESULTS",
+  "run_at_utc": "2026-11-05T05:50:58+00:00",
+  "inputs": {
+    "nested_json_bronze": "data/bronze/virginia/2026-11-03/snapshot_2026-11-04/election_results_json",
+    "precinct_results_curated": "data/curated/virginia/2026-11-03/snapshot_2026-11-04/results",
+    "turnout_curated": "data/curated/virginia/2026-11-03/snapshot_2026-11-04/turnout",
+    "statewide_reconciliation": "data/curated/virginia/2026-11-03/snapshot_2026-11-04/statewide_reconciliation"
+  },
+  "outputs": {
+    "locality_results": "data/curated/virginia/2026-11-03/snapshot_2026-11-04/locality_results",
+    "contest_choice_totals": "contest_choice_totals/",
+    "locality_precinct_coverage": "locality_precinct_coverage/",
+    "precinct_turnout_rates": "precinct_turnout_rates/",
+    "locality_turnout_summary": "locality_turnout_summary/"
+  },
+  "checks_and_findings": {
+    "locality_results_rows": 3730,
+    "localities": 133,
+    "duplicate_locality_result_key_groups": 0,
+    "contest_choice_total_rows": 1968,
+    "contest_choice_summary_status_counts": {
+      "MATCH": 113,
+      "NO_STATEWIDE_SUMMARY": 1855
+    },
+    "locality_precinct_coverage_rows": 3730,
+    "locality_precinct_coverage_status_counts": {
+      "COMPLETE_PRECINCT_DETAIL": 2931,
+      "INCOMPLETE_PRECINCT_ROWS": 799
+    },
+    "precinct_turnout_rows": 2529,
+    "precinct_turnout_rates_available": 1544,
+    "locality_turnout_summaries": 133,
+    "locality_turnout_rates_available": 62,
+    "locality_turnout_rates_unavailable_due_to_incomplete_inputs": 71
+  },
+  "definitions": {
+    "precinct_turnout_rate": "total_vote_turnout / total_registered_voters",
+    "locality_turnout_rate": "sum(total_vote_turnout) / sum(total_registered_voters), only when every precinct numerator and denominator is present",
+    "locality_precinct_coverage": "Full JSON locality votes and CSV precinct-detail sums are shown at their own grains; the difference is a coverage measure, not a forced reconciliation.",
+    "contest_choice_summary_status": "NO_STATEWIDE_SUMMARY is expected for choices without a statewide counterpart in the source; their locality totals remain available.",
+    "missing_values": "Blank source counts remain null; they are not treated as zero."
+  },
+  "interpretation": "Use locality_results for full locality-level candidate or ballot-choice totals. Use the M3 results table for precinct detail. Turnout rates are available only where both the reported turnout numerator and registration denominator are present; incomplete locality totals are left null. A missing statewide summary for a local contest is expected and is not a failed reconciliation."
+}

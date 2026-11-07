@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Compare Virginia U.S. House results by district across the 2022 and 2026 midterm elections." />
+    <title>Virginia House results | District comparison</title>
+    <link rel="stylesheet" href="/dashboard-assets/dashboard.css?v=12" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="/dashboard" aria-label="Virginia election results home">
+          <span class="brand-mark" aria-hidden="true">VA</span>
+          <span class="brand-name">Virginia House</span>
+        </a>
+        <a class="api-link" href="/docs">API</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="state-banner" aria-labelledby="page-title">
+        <div class="content-width">
+          <div class="title-line">
+            <div>
+              <h1 id="page-title">House results by district</h1>
+              <p class="intro-copy">Compare Virginia’s November 2022 and 2026 midterm returns</p>
+            </div>
+          </div>
+          <div class="validation-line">
+            <p class="load-message" id="load-message" aria-live="polite">Loading saved election results…</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="content-width page-content">
+        <div class="workspace-layout">
+        <section id="districts" class="results-layout" aria-label="District results and candidate detail">
+          <section class="race-detail" aria-label="Results for selected congressional district">
+            <div class="race-titlebar">
+              <label class="visually-hidden" for="district-select">Choose a congressional district</label>
+              <span class="district-select-wrap">
+                <select id="district-select" class="district-select"><option selected disabled>Loading districts…</option></select>
+              </span>
+              <span class="race-status" id="race-status">2026 unofficial snapshot</span>
+            </div>
+
+            <div class="results-tabs" role="tablist" aria-label="District result views">
+              <button id="tab-share" class="results-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-share">Vote share</button>
+              <button id="tab-candidates" class="results-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-candidates" tabindex="-1">Candidates</button>
+              <button id="tab-sources" class="results-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-sources" tabindex="-1">Sources &amp; method</button>
+            </div>
+            <div class="results-panels">
+              <section id="panel-share" class="result-panel" role="tabpanel" aria-labelledby="tab-share" tabindex="0">
+                <section class="share-panel" aria-labelledby="share-heading">
+                  <div class="subsection-heading">
+                    <h3 id="share-heading">Two-party vote share</h3>
+                    <div class="party-key" aria-label="Party colors">
+                      <span><i class="key-dot democratic" aria-hidden="true"></i>Democratic</span>
+                      <span><i class="key-dot republican" aria-hidden="true"></i>Republican</span>
+                    </div>
+                  </div>
+                  <div id="share-comparison" class="share-comparison"></div>
+                  <div id="share-summary" class="share-summary" aria-live="polite"></div>
+                  <p class="chart-note">Share is calculated from Democratic and Republican votes only. Other-party and write-in votes are excluded.</p>
+                </section>
+              </section>
+              <section id="panel-candidates" class="result-panel" role="tabpanel" aria-labelledby="tab-candidates" tabindex="0" hidden>
+                <section class="candidate-results" aria-labelledby="candidate-results-title">
+                  <div class="subsection-heading candidate-heading">
+                    <h3 id="candidate-results-title">Candidates by election</h3>
+                    <p class="results-note">Candidate votes are not turnout</p>
+                  </div>
+                  <div class="candidate-ledger">
+                    <article class="candidate-period current-period" aria-labelledby="candidate-2026-heading">
+                      <div class="period-heading">
+                        <h4 id="candidate-2026-heading">November 3, 2026</h4>
+                        <span class="source-status unofficial" id="detail-status-2026">Unofficial</span>
+                      </div>
+                      <div class="candidate-table-wrap" id="candidates-2026"></div>
+                      <div class="period-source"><span class="snapshot-id" id="detail-snapshot-2026"></span><a id="detail-source-2026" target="_blank" rel="noreferrer noopener">Source</a></div>
+                    </article>
+                    <article class="candidate-period" aria-labelledby="candidate-2022-heading">
+                      <div class="period-heading">
+                        <h4 id="candidate-2022-heading">November 8, 2022</h4>
+                        <span class="source-status official" id="detail-status-2022">Official</span>
+                      </div>
+                      <div class="candidate-table-wrap" id="candidates-2022"></div>
+                      <div class="period-source"><span class="snapshot-id" id="detail-snapshot-2022"></span><a id="detail-source-2022" target="_blank" rel="noreferrer noopener">Source</a></div>
+                    </article>
+                  </div>
+                </section>
+              </section>
+              <section id="panel-sources" class="result-panel source-panel" role="tabpanel" aria-labelledby="tab-sources" tabindex="0" hidden>
+                <section id="sources" class="source-section" aria-labelledby="sources-title">
+                  <div class="source-section-heading">
+                    <div><p class="section-kicker">Data provenance</p><h2 id="sources-title">Saved Virginia source snapshots</h2></div>
+                    <p>These are saved source records. The page does not show a live election feed.</p>
+                  </div>
+                  <div class="source-records">
+                    <article class="source-record">
+                      <div class="record-year">2022</div>
+                      <div><strong>November General</strong><span id="source-status-2022" class="source-status official">Official results</span></div>
+                      <div class="snapshot-block"><span>Snapshot</span><code id="snapshot-2022"></code></div>
+                      <a id="source-2022" target="_blank" rel="noreferrer noopener">Virginia source</a>
+                    </article>
+                    <article class="source-record">
+                      <div class="record-year">2026</div>
+                      <div><strong>November General</strong><span id="source-status-2026" class="source-status unofficial">Unofficial results</span></div>
+                      <div class="snapshot-block"><span>Snapshot</span><code id="snapshot-2026"></code></div>
+                      <a id="source-2026" target="_blank" rel="noreferrer noopener">Virginia source</a>
+                    </article>
+                  </div>
+                </section>
+                <section id="method" class="method-note" aria-labelledby="method-title">
+                  <h2 id="method-title">How to compare results</h2>
+                  <p>The percentage-point change compares Democratic two-party share in the same congressional district. It describes party results across two elections; it does not identify how individual voters behaved. District boundaries, candidates, and election conditions can change. Candidate votes are reported choices, not a turnout measure.</p>
+                </section>
+              </section>
+            </div>
+          </section>
+        </section>
+
+        <aside id="ask-results" class="assistant-section" aria-labelledby="assistant-title">
+          <div class="assistant-heading-row">
+            <h2 id="assistant-title">Election assistant</h2>
+            <div class="assistant-actions">
+              <button id="assistant-reset" class="assistant-reset" type="button">New chat</button>
+              <button id="assistant-toggle" class="assistant-toggle" type="button" aria-label="Expand conversation" aria-expanded="false" aria-controls="assistant-messages">
+              <svg aria-hidden="true" viewBox="0 0 20 20"><path d="m5 7 5 5 5-5"></path></svg>
+              </button>
+            </div>
+          </div>
+          <div id="assistant-messages" class="assistant-messages" role="log" aria-live="polite" aria-relevant="additions text">
+            <p id="assistant-empty" class="assistant-empty">Ask about a district, candidate votes, or the share change.</p>
+          </div>
+          <form id="assistant-form" class="assistant-form">
+            <label class="visually-hidden" for="assistant-question">Your question about the election results</label>
+            <div class="assistant-input-row">
+              <input id="assistant-question" name="question" type="text" maxlength="500" placeholder="Ask about these results" autocomplete="off" required />
+              <button id="assistant-submit" type="submit">Send</button>
+            </div>
+          </form>
+          <details class="assistant-disclosure">
+            <summary>Data and AI usage</summary>
+            <p>With an API key, your question, the last 12 conversation messages, and this saved public election data are sent to OpenAI. API usage may incur charges. Without a key, answers use limited local lookups.</p>
+          </details>
+        </aside>
+        </div>
+
+      </div>
+    </main>
+
+    <footer class="site-footer"><div class="content-width"><span>Virginia U.S. House · 2022 and 2026 midterms</span><span>Source: Virginia Department of Elections · <a href="/docs">API documentation</a></span></div></footer>
+    <script src="/dashboard-assets/dashboard.js?v=12" defer></script>
+  </body>
+</html>

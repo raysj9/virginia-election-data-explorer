@@ -1,0 +1,127 @@
+{
+  "milestone": "M5: midterm House comparison",
+  "overall_status": "PASS",
+  "run_at_utc": "2026-11-05T06:10:37+00:00",
+  "sources": {
+    "2022": {
+      "election_date": "2022-11-08",
+      "snapshot_id": "snapshot_2026-11-05",
+      "source_status": "OFFICIAL RESULTS",
+      "source_url": "https://results.elections.virginia.gov/vaelections/2022%20November%20General/Json/Congress.json",
+      "local_file": "data/raw/virginia/2022-11-08/snapshot_2026-11-05/congress.json"
+    },
+    "2026": {
+      "election_date": "2026-11-03",
+      "snapshot_id": "snapshot_2026-11-04",
+      "source_status": "UNOFFICIAL RESULTS",
+      "source_url": "https://enr.elections.virginia.gov/results/public/virginia/elections/2026-November-General",
+      "local_file": "data/raw/virginia/2026-11-03/snapshot_2026-11-04/election_results.json"
+    }
+  },
+  "comparison_grain": "election × congressional district × party",
+  "method": {
+    "party_totals": "Sum each candidate's votes by reported party within each congressional district; retain non-Democratic and non-Republican choices in the output.",
+    "two_party_share": "party votes / (Democratic votes + Republican votes); calculated separately for each year and district.",
+    "margin": "(Democratic votes - Republican votes) / two-party votes × 100, in percentage points.",
+    "change": "2026 Democratic two-party share minus 2022 Democratic two-party share, in percentage points."
+  },
+  "checks_and_findings": {
+    "candidate_choice_rows": {
+      "2022": 35,
+      "2026": 47
+    },
+    "district_ids": {
+      "2022": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11"
+      ],
+      "2026": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11"
+      ]
+    },
+    "matched_districts": 11,
+    "unmatched_2022_districts": [],
+    "unmatched_2026_districts": [],
+    "districts_missing_democratic_or_republican_votes": {
+      "2022": 0,
+      "2026": 0
+    },
+    "duplicate_district_year_party_groups": 0,
+    "negative_candidate_vote_rows": 0,
+    "statewide_house_votes_summed_across_districts": {
+      "2022": {
+        "democratic_votes": 1572296,
+        "republican_votes": 1462049,
+        "other_party_and_write_in_votes": 13384
+      },
+      "2026": {
+        "democratic_votes": 2090876,
+        "republican_votes": 1419092,
+        "other_party_and_write_in_votes": 58174
+      }
+    },
+    "largest_absolute_democratic_share_changes": [
+      {
+        "district_id": "10",
+        "democratic_share_2022": 0.5325508850755156,
+        "democratic_share_2026": 0.6262834885459017,
+        "democratic_share_change_pp": 9.373260347038602,
+        "leader_2022": "Democratic",
+        "leader_2026": "Democratic"
+      },
+      {
+        "district_id": "07",
+        "democratic_share_2022": 0.5233095936015887,
+        "democratic_share_2026": 0.6126002400960384,
+        "democratic_share_change_pp": 8.929064649444973,
+        "leader_2022": "Democratic",
+        "leader_2026": "Democratic"
+      },
+      {
+        "district_id": "06",
+        "democratic_share_2022": 0.354998102410311,
+        "democratic_share_2026": 0.44370852544405665,
+        "democratic_share_change_pp": 8.871042303374566,
+        "leader_2022": "Republican",
+        "leader_2026": "Republican"
+      }
+    ]
+  },
+  "comparability": {
+    "cycle": "Both are November midterm general elections.",
+    "office": "Both compare U.S. House general-election results.",
+    "geography": "The Department of Elections stated that the congressional district boundaries in force before the voided April 2026 referendum remained in place for the 2026 primary and general elections; these are the same district numbers used in 2022.",
+    "snapshot_status_difference": "2022 is official; the 2026 input is the project's saved unofficial-results snapshot.",
+    "limits": [
+      "Different candidates ran in most districts; this measures party vote-share change, not individual voter movement.",
+      "The 2022 source is a district-level statewide summary and does not provide locality or precinct rows in this JSON export.",
+      "Candidate vote totals are not a turnout measure; this job does not calculate turnout.",
+      "The 2026 results may have changed after the saved snapshot and are not presented as certified results."
+    ]
+  },
+  "outputs": {
+    "district_party_totals": "data/analytics/virginia/2022-11-08_vs_2026-11-03/snapshot_2026-11-05/district_party_totals",
+    "district_metrics": "data/analytics/virginia/2022-11-08_vs_2026-11-03/snapshot_2026-11-05/district_metrics",
+    "district_comparison": "data/analytics/virginia/2022-11-08_vs_2026-11-03/snapshot_2026-11-05/district_comparison",
+    "report": "data/analytics/virginia/2022-11-08_vs_2026-11-03/snapshot_2026-11-05/analytics_report.json"
+  }
+}

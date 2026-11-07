@@ -1,0 +1,94 @@
+{
+  "milestone": "M3: clean and validate",
+  "overall_status": "WARN",
+  "snapshot_id": "snapshot_2026-11-04",
+  "source_status": "UNOFFICIAL RESULTS",
+  "raw_json_source": "data/raw/virginia/2026-11-03/snapshot_2026-11-04/election_results.json",
+  "source_json_created_at": "2026-11-05T02:19:32.5078532Z",
+  "run_at_utc": "2026-11-05T05:37:48+00:00",
+  "inputs": {
+    "bronze_results": "data/bronze/virginia/2026-11-03/snapshot_2026-11-04/election_results_csv",
+    "bronze_turnout": "data/bronze/virginia/2026-11-03/snapshot_2026-11-04/election_turnout_csv"
+  },
+  "outputs": {
+    "results": "results/",
+    "turnout": "turnout/",
+    "statewide_reconciliation": "statewide_reconciliation/"
+  },
+  "checks": {
+    "results": {
+      "rows": 46418,
+      "required_field_nulls": {
+        "election_id": 0,
+        "locality_code": 0,
+        "precinct_id": 0,
+        "office_id": 0,
+        "candidate_id": 0
+      },
+      "invalid_integer_values": {
+        "votes": 0,
+        "write_in_vote": 0,
+        "number_of_seats": 0
+      },
+      "invalid_election_dates": 0,
+      "negative_vote_values": 0,
+      "rows_with_missing_votes": 7223,
+      "key_uniqueness": {
+        "duplicate_key_groups": 0,
+        "duplicate_excess_rows": 0
+      }
+    },
+    "turnout": {
+      "rows": 2529,
+      "required_field_nulls": {
+        "election": 0,
+        "election_date": 0,
+        "locality": 0,
+        "precinct": 0
+      },
+      "invalid_integer_values": {
+        "provisional": 0,
+        "post_election": 0,
+        "election_day": 0,
+        "early_voting": 0,
+        "mailed_absentee": 0,
+        "total_vote_turnout": 0,
+        "active_registered_voters": 0,
+        "inactive_registered_voters": 0,
+        "total_registered_voters": 0
+      },
+      "invalid_election_dates": 0,
+      "rows_with_negative_count_values": 0,
+      "missing_count_values_by_field": {
+        "provisional": 1339,
+        "post_election": 1502,
+        "election_day": 1782,
+        "early_voting": 2110,
+        "mailed_absentee": 2148,
+        "total_vote_turnout": 985,
+        "active_registered_voters": 0,
+        "inactive_registered_voters": 0,
+        "total_registered_voters": 0
+      },
+      "key_uniqueness": {
+        "duplicate_key_groups": 0,
+        "duplicate_excess_rows": 0
+      },
+      "registered_voter_total_mismatches": 0,
+      "complete_vote_method_rows_compared": 132,
+      "complete_vote_method_total_mismatches": 0
+    },
+    "statewide_reconciliation": {
+      "summary_choice_rows": 113,
+      "statewide_vs_locality_summary_status_counts": {
+        "MATCH": 113
+      },
+      "csv_vs_json_precinct_detail_status_counts": {
+        "MATCH": 84,
+        "INCOMPLETE_CSV_VALUES": 29
+      },
+      "rule": "Compare statewide JSON totals with summed JSON locality totals, and compare CSV precinct totals with JSON precinct-detail totals. The statewide-to-precinct difference is retained as a coverage measure."
+    }
+  },
+  "interpretation": "The full statewide/locality totals include votes that are not present in the precinct-detail breakdown. CSV precinct rows are checked against the JSON precinct details at the same level; blank CSV vote values remain null. No source totals are altered."
+}
